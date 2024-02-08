@@ -1,4 +1,4 @@
-package com.rocketseat.certificate_nlw.modules.students.entities;
+package com.rocketseat.certificate_nlw.modules.questions.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,20 +13,21 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "students")
-public class StudentEntity {
-
+@Entity(name="questions")
+public class QuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+    @Column(length = 50)
+    private String technology;
 
-    @OneToMany(mappedBy = "studentEntity")
-    private List<CertificateStudentEntity> certificationStudentEntity;
+    private String description;
+
+    @OneToMany
+    @JoinColumn(name = "question_id")
+    private List<AlternativesEntity> alternatives;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
-
 }
