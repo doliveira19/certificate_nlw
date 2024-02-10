@@ -1,6 +1,6 @@
 package com.rocketseat.certificate_nlw.modules.students.repositories;
 
-import com.rocketseat.certificate_nlw.modules.students.entities.CertificateStudentEntity;
+import com.rocketseat.certificate_nlw.modules.students.entities.CertificationStudentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface CertificateStudentRepository extends JpaRepository<CertificateStudentEntity, UUID> {
+public interface CertificateStudentRepository extends JpaRepository<CertificationStudentEntity, UUID> {
     @Query("SELECT c FROM certifications c INNER JOIN c.studentEntity std WHERE std.email = :email AND c.technology = :technology")
-    List<CertificateStudentEntity> findByStudentEmailAndTechnology(String email, String technology);
+    List<CertificationStudentEntity> findByStudentEmailAndTechnology(String email, String technology);
+    @Query("SELECT c from certifications c ORDER BY c.grade DESC LIMIT 10")
+    List<CertificationStudentEntity> findTop10ByOrderByGradeDesc();
 }
